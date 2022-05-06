@@ -71,7 +71,7 @@
 								</td>
 
                 <td class="px-6 py-4 whitespace-nowrap">
-									<div class="text-sm text-gray-900">{{ content.dateCreated }}</div>
+									<div class="text-sm text-gray-900">{{ dateFormat(content.dateCreated) }}</div>
 								</td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -100,7 +100,7 @@
     suggestions.value = response.suggestions;
   })
 
-  function vote(content){
+  const vote = (content) => {
     content.votes++;
     $fetch(address, {
       method: "POST",
@@ -108,4 +108,7 @@
       body: JSON.stringify(content)
     });
   }
+
+  const dateFormat = (date) => new Date(date).toISOString().split('T')[0].replaceAll('-', '.')
+
 </script>
