@@ -51,14 +51,20 @@
 								</td>
 
                 <td class="px-6 py-4 whitespace-nowrap">
-									<span v-for="contentType in content.type" :class="'bg-' + contentType.color + '-500'" class="text-white py-1 px-2 rpunded text-xs font-bold ml-1">
-                  {{ contentType.name}}
+									<span 
+                    v-for="contentType in content.type" 
+                    :class="'bg-' + contentType.color + '-500'" 
+                    class="text-gray py-1 px-2 rounded text-xs font-bold ml-1">
+                  {{ contentType.name }}
                   </span>
 								</td>
 
                 <td class="px-6 py-4 whitespace-nowrap">
-									<span v-for="tag in content.tags" :class="'bg-' + tag.color + '-500'" class="text-white py-1 px-2 rpunded text-xs font-bold ml-1">
-                  {{ tag.name}}
+									<span 
+                    v-for="tag in content.tags" 
+                    :class="'bg-' + tag.color + '-500'" 
+                    class="text-gray py-1 px-2 rounded text-xs font-bold ml-1">
+                  {{ tag.name }}
                   </span>
 								</td>
 
@@ -68,7 +74,7 @@
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 									{{ content.votes }}
-                  <button @click="vote(content)" class="text-indigo-600 hover:text-indigo-900">Vote</button>
+                  <button @click="vote(content)" class="text-indigo-400 hover:text-indigo-900">Vote</button>
 								</td>
               </tr>
             </tbody>
@@ -81,18 +87,22 @@
 
 <script setup>
   let suggestions= ref([]);
+  const address = "/api/notion"
 
   onMounted(async () => {
-    const response = await $fetch("/api/notion");
+    const response = await $fetch(address);
     suggestions.value = response.suggestions;
   })
 
-  function vote(contnt){
-    contnt.votes++;
-    $fetch("/api/notion", {
+  function vote(content){
+    content.votes++;
+    $fetch(address, {
       method: "POST",
-      headers: {"Content-Type": "application-json"},
-      body: JSON.stringify(contnt)
+      headers: {
+        "Content-Type": "application-json",
+        "Notion-Version": "2022-02-22",
+      },
+      body: JSON.stringify(content)
     });
   }
 </script>
