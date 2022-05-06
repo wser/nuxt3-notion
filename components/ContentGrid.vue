@@ -53,8 +53,9 @@
                 <td class="px-6 py-4 whitespace-nowrap">
 									<span 
                     v-for="contentType in content.type" 
-                    :class="'bg-' + contentType.color + '-500'" 
-                    class="text-gray py-1 px-2 rounded text-xs font-bold ml-1">
+                    :key="contentType.id"
+                    class="text-gray py-1 px-2 rounded text-xs font-bold ml-1"
+                    :class="'bg-' + contentType.color + '-200'" >
                   {{ contentType.name }}
                   </span>
 								</td>
@@ -62,8 +63,9 @@
                 <td class="px-6 py-4 whitespace-nowrap">
 									<span 
                     v-for="tag in content.tags" 
-                    :class="'bg-' + tag.color + '-500'" 
-                    class="text-gray py-1 px-2 rounded text-xs font-bold ml-1">
+                    :key="tag.id"
+                    class="text-gray py-1 px-2 rounded text-xs font-bold ml-1"
+                    :class="'bg-' + tag.color + '-200'" >
                   {{ tag.name }}
                   </span>
 								</td>
@@ -88,6 +90,10 @@
 <script setup>
   let suggestions= ref([]);
   const address = "/api/notion"
+  const headers = {
+    "Content-Type": "application-json",
+    "Notion-Version": "2022-02-22",
+  }
 
   onMounted(async () => {
     const response = await $fetch(address);
@@ -98,10 +104,7 @@
     content.votes++;
     $fetch(address, {
       method: "POST",
-      headers: {
-        "Content-Type": "application-json",
-        "Notion-Version": "2022-02-22",
-      },
+      headers: headers,
       body: JSON.stringify(content)
     });
   }

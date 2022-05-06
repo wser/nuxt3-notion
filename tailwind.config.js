@@ -6,6 +6,14 @@ module.exports = {
     './plugins/**/*.{js,ts}',
     '*.vue',
   ],
+  safelist: [
+    'border-l-2',
+    'border-blue-500',
+    {
+      pattern:
+        /(bg|text|border)-(red|green|blue|purple|yellow|gray|indigo|orange)-(100|200|300|400|500)/,
+    },
+  ],
   theme: {
     extend: {},
   },

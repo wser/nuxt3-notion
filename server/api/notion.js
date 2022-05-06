@@ -29,28 +29,24 @@ export default async (req, res) => {
       const suggestions = [];
 
       database.results.map((row) => {
+        let fun = (e) => {
+          return { name: e.name, color: mapColor(e.color) };
+        };
         suggestions.push({
           id: row.id,
           title: row.properties.Title.title[0].text.content,
           description: row.properties.Description.rich_text[0].text.content,
-          type: row.properties.Type.multi_select.map((type) => {
-            return { name: type.name, color: type.color };
-          }),
-          tags: row.properties['Tags'].multi_select.map((tag) => {
-            return { name: tag.name, color: mapColor(tag.color) };
-          }),
+          type: row.properties.Type.multi_select.map((type) => fun(type)),
+          tags: row.properties.Tags.multi_select.map((tag) => fun(tag)),
           dateCreated: row.properties['Date Created'].created_time,
           votes: row.properties.Votes.number,
         });
       });
-
       return { suggestions };
       break;
   }
 
   function mapColor(color) {
-    let mappedColor = color;
-    color = 'purple' ? (mappedColor = 'indigo') : mappedColor;
-    return mappedColor;
+    return color === 'purple' ? 'indigo' : color;
   }
 };
