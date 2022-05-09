@@ -91,8 +91,9 @@
   let suggestions= ref([]);
   const address = "/api/notion"
   const headers = {
-    "Content-Type": "application-json",
-    "Notion-Version": "2022-02-22",
+    Accept: 'application/json',
+    'Notion-Version': '2022-02-22',
+    'Content-Type': 'application/json'
   }
 
   onMounted(async () => {
@@ -106,7 +107,9 @@
       method: "POST",
       headers: headers,
       body: JSON.stringify(content)
-    });
+    })
+    .then(response => console.log(content.votes))
+    .catch(err => console.error(err));;
   }
 
   const dateFormat = (date) => new Date(date).toISOString().split('T')[0].replaceAll('-', '.')
