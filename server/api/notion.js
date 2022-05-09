@@ -9,18 +9,22 @@ export default async (req, res) => {
     case 'POST':
       let content = await useBody(req);
       const obj = JSON.parse(content);
-
-      notion.pages.update({
-        page_id: obj.id,
-        properties: {
-          Votes: {
-            number: obj.votes,
+      try {
+        notion.pages.update({
+          page_id: obj.id,
+          properties: {
+            //prettier-ignore
+            'Votes': {
+              number: obj.votes,
+            },
           },
-        },
-      });
-      res.statusCode = 200;
-      res.end();
-      break;
+        });
+        res.statusCode = 200;
+        res.end();
+      } catch (err) {
+        console.log(err);
+      }
+
     case 'GET':
       // handle GET
       const database = await notion.databases.query({
@@ -45,6 +49,5 @@ export default async (req, res) => {
         });
       });
       return { suggestions };
-      break;
   }
 };
