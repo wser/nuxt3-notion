@@ -108,8 +108,8 @@
       headers: headers,
       body: JSON.stringify(content)
     })
-    .then(response => console.log(content.votes))
-    .catch(err => console.error(err));;
+    //.then(response => console.log(content.votes))
+    .catch(err => console.error(err));
   }
 
   const dateFormat = (date) => new Date(date).toISOString().split('T')[0].replaceAll('-', '.')
