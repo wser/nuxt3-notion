@@ -15,8 +15,7 @@ export default async (req, res) => {
         notion.pages.update({
           page_id: obj.id,
           properties: {
-            //prettier-ignore
-            'Votes': {
+            Votes: {
               number: obj.votes,
             },
           },
@@ -36,6 +35,7 @@ export default async (req, res) => {
           select: { equals: 'Live' },
         },
       });
+
       const suggestions = [];
 
       const mapColor = (color) => (color === 'purple' ? 'indigo' : color);
@@ -53,9 +53,9 @@ export default async (req, res) => {
           dateCreated: r['Date Created'].created_time,
           votes: r.Votes.number,
           status: r.Status.select.name,
+          statusColor: r.Status.select.color,
         });
       });
-
       return { suggestions };
   }
 };
