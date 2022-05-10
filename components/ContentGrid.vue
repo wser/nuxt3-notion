@@ -2,7 +2,7 @@
 <!-- component -->
 <div class="flex flex-col">
   <div class="container mx-auto pt-8">
-      <!-- <h1 class="mb-4 text-3xl font-bold">{{ suggestions['title'][0]['plain_text'] }}</h1> -->
+      <h1 class="mb-4 text-3xl font-bold">Notion content</h1>
       <p class="text-sm pb-4">This is a list of content ideas. If you would like to see more. VOTE!!!</p>
       <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -108,10 +108,12 @@
     'Content-Type': 'application/json'
   }
 
-  onMounted(async () => {
-    const response = await $fetch(address);
-    suggestions.value = response.suggestions;
-  })
+  const getData = $fetch(address, {
+      method: "GET",
+      headers: headers,
+    })
+    .then((res) => { suggestions.value = res.suggestions;})
+    .catch(err => console.error(err));;
 
   const vote = (content) => {
     content.votes++;
@@ -124,6 +126,9 @@
     .catch(err => console.error(err));
   }
 
+
+  onMounted(async () => await getData)
+  
   const dateFormat = (date) => new Date(date).toISOString().split('T')[0].replaceAll('-', '.')
 
 </script>
