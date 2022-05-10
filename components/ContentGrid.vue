@@ -3,7 +3,7 @@
 <div class="flex flex-col">
   <div class="container mx-auto pt-8">
       <h1 class="mb-4 text-3xl font-bold">Notion content</h1>
-      <p class="text-sm pb-4">This is a list of content ideas. If you would like to see more. VOTE!!!</p>
+      <p class="text-sm pb-4">This is a list of content ideas that are published live. If you would like to see more. VOTE!!!</p>
       <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-gray">
