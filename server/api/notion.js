@@ -29,8 +29,14 @@ export default async (req, res) => {
       // handle GET
       const database = await notion.databases.query({
         database_id: process.env.NOTION_DATABASE_ID,
+        filter: {
+          property: 'Status',
+          select: { equals: 'Live' },
+        },
       });
       const suggestions = [];
+
+      //const titlez = [];
 
       const mapColor = (color) => (color === 'purple' ? 'indigo' : color);
 
@@ -46,8 +52,13 @@ export default async (req, res) => {
           tags: r.Tags.multi_select.map((tag) => colorize(tag)),
           dateCreated: r['Date Created'].created_time,
           votes: r.Votes.number,
+          status: r.Status.select.name,
         });
+
+        //titlez.push({ title: row.title.text.content });
       });
-      return { suggestions };
+
+      console.log(suggestions);
+      return { suggestions /*titlez*/ };
   }
 };
