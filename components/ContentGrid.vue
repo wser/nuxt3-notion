@@ -111,7 +111,6 @@
   onMounted(async () => {
     const response = await $fetch(address);
     suggestions.value = response.suggestions;
-    console.log(response)
   })
 
   const vote = (content) => {

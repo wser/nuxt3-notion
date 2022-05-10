@@ -1,9 +1,11 @@
 import { Client } from '@notionhq/client';
 import { useBody } from 'h3';
 
+const { NOTION_DATABASE_ID, NOTION_API_KEY } = process.env;
+
 export default async (req, res) => {
   // secret key
-  const notion = new Client({ auth: process.env.NOTION_API_KEY });
+  const notion = new Client({ auth: NOTION_API_KEY });
 
   switch (req.method) {
     case 'POST':
@@ -28,15 +30,13 @@ export default async (req, res) => {
     case 'GET':
       // handle GET
       const database = await notion.databases.query({
-        database_id: process.env.NOTION_DATABASE_ID,
+        database_id: NOTION_DATABASE_ID,
         filter: {
           property: 'Status',
           select: { equals: 'Live' },
         },
       });
       const suggestions = [];
-
-      //const titlez = [];
 
       const mapColor = (color) => (color === 'purple' ? 'indigo' : color);
 
@@ -54,11 +54,8 @@ export default async (req, res) => {
           votes: r.Votes.number,
           status: r.Status.select.name,
         });
-
-        //titlez.push({ title: row.title.text.content });
       });
 
-      console.log(suggestions);
-      return { suggestions /*titlez*/ };
+      return { suggestions };
   }
 };
