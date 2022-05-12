@@ -6,17 +6,18 @@ export default defineNuxtConfig({
   router: {
     base: '/nuxt3-notion/'
   },
-  build: {
-    postcss: {
-      postcssOptions: {
-        plugins: {
-          tailwindcss: {},
-          autoprefixer: {},
-        },
-      },
-    },
+  modules: [
+    '@unocss/nuxt',
+  ],
+  unocss: {
+    // presets
+    uno: true, // enabled `@unocss/preset-uno`
+    icons: true, // enabled `@unocss/preset-icons`
+    wind:true, 
+    attributify: false, // enabled `@unocss/preset-attributify`,
+
+    // core options
+    shortcuts: [],
+    rules: [],
   },
-  css: [
-    "~/assets/css/tailwind.css"
-  ]
 })

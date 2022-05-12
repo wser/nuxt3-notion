@@ -8,8 +8,9 @@
     "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.1",
-    "tailwindcss": "^3.0.24"
+    "@unocss/nuxt": "^0.33.2",
+    "@unocss/preset-wind": "^0.33.2",
+    "nuxt": "3.0.0-rc.1"
   },
   "dependencies": {
     "@notionhq/client": "^1.0.4"
