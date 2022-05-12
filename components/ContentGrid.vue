@@ -101,20 +101,6 @@
         </div>
       </div>
   </div>
-
-
-   <div>pos: {{x}}, {{y}}</div>
-
- <button @click="next()">
-    <i v-if="mode === 'dark'" i-carbon-moon inline-block align-middle class="align-middle" />
-    <i v-if="mode === 'light'" i-carbon-sun inline-block align-middle class="align-middle" />
-    <i v-if="mode === 'cafe'" i-carbon-cafe inline-block align-middle class="align-middle" />
-    <i v-if="mode === 'contrast'" i-carbon-contrast inline-block align-middle class="align-middle" />
-
-    <span class="ml-2 capitalize">{{ mode }}</span>
-  </button>
-
-  <span class="p-4 opacity-50">← Click to change the color mode Current: {{ mode}}</span>
 </div>
 
 
@@ -122,19 +108,6 @@
 
 
 <script setup>
-import { useColorMode, useCycleList, useMouse } from '@vueuse/core'
-// vueuse functionalities
-const { x, y } = useMouse()
-
-const mode = useColorMode({
-  modes: {
-    contrast: 'dark contrast',
-    cafe: 'cafe',
-  },
-})
-const { next } = useCycleList(['dark', 'light', 'cafe', 'contrast'], { initialValue: mode })
-
-/////////////////
   let suggestions= ref([]);
   const address = "/api/notion"
   const headers = {
@@ -166,4 +139,3 @@ const { next } = useCycleList(['dark', 'light', 'cafe', 'contrast'], { initialVa
   const dateFormat = (date) => new Date(date).toISOString().split('T')[0].replaceAll('-', '.')
 
 </script>
-
