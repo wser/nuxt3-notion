@@ -9,6 +9,9 @@ export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
   ],
+  buildModules: [
+    '@vueuse/nuxt',
+  ],
   unocss: {
     // presets
     uno: true, // enabled `@unocss/preset-uno`

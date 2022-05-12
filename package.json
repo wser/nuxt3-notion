@@ -10,9 +10,11 @@
   "devDependencies": {
     "@unocss/nuxt": "^0.33.2",
     "@unocss/preset-wind": "^0.33.2",
+    "@vueuse/nuxt": "^8.4.2",
     "nuxt": "3.0.0-rc.1"
   },
   "dependencies": {
-    "@notionhq/client": "^1.0.4"
+    "@notionhq/client": "^1.0.4",
+    "@vueuse/core": "^8.4.2"
   }
 }

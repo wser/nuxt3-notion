@@ -102,9 +102,15 @@
       </div>
   </div>
 </div>
+
+ <div>pos: {{x}}, {{y}}</div>
 </template>
 
-<script setup>
+
+<script setup lan="ts">
+const { x, y } = useMouse()
+
+
   let suggestions= ref([]);
   const address = "/api/notion"
   const headers = {
