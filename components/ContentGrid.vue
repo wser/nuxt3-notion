@@ -121,8 +121,8 @@
 </template>
 
 
-<script setup lan="ts">
-import { useColorMode, useCycleList } from '@vueuse/core'
+<script setup>
+import { useColorMode, useCycleList, useMouse } from '@vueuse/core'
 // vueuse functionalities
 const { x, y } = useMouse()
 
@@ -167,11 +167,3 @@ const { next } = useCycleList(['dark', 'light', 'cafe', 'contrast'], { initialVa
 
 </script>
 
-<style>
-html.cafe {
-  filter: sepia(0.9) hue-rotate(315deg) brightness(0.9);
-}
-html.contrast {
-  filter: contrast(2);
-}
-</style>
