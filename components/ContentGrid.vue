@@ -101,16 +101,40 @@
         </div>
       </div>
   </div>
+
+
+   <div>pos: {{x}}, {{y}}</div>
+
+ <button @click="next()">
+    <i v-if="mode === 'dark'" i-carbon-moon inline-block align-middle class="align-middle" />
+    <i v-if="mode === 'light'" i-carbon-sun inline-block align-middle class="align-middle" />
+    <i v-if="mode === 'cafe'" i-carbon-cafe inline-block align-middle class="align-middle" />
+    <i v-if="mode === 'contrast'" i-carbon-contrast inline-block align-middle class="align-middle" />
+
+    <span class="ml-2 capitalize">{{ mode }}</span>
+  </button>
+
+  <span class="p-4 opacity-50">← Click to change the color mode Current: {{ mode}}</span>
 </div>
 
- <div>pos: {{x}}, {{y}}</div>
+
 </template>
 
 
 <script setup lan="ts">
+import { useColorMode, useCycleList } from '@vueuse/core'
+// vueuse functionalities
 const { x, y } = useMouse()
 
+const mode = useColorMode({
+  modes: {
+    contrast: 'dark contrast',
+    cafe: 'cafe',
+  },
+})
+const { next } = useCycleList(['dark', 'light', 'cafe', 'contrast'], { initialValue: mode })
 
+/////////////////
   let suggestions= ref([]);
   const address = "/api/notion"
   const headers = {
@@ -142,3 +166,12 @@ const { x, y } = useMouse()
   const dateFormat = (date) => new Date(date).toISOString().split('T')[0].replaceAll('-', '.')
 
 </script>
+
+<style>
+html.cafe {
+  filter: sepia(0.9) hue-rotate(315deg) brightness(0.9);
+}
+html.contrast {
+  filter: contrast(2);
+}
+</style>

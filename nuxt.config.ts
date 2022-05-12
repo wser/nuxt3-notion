@@ -16,8 +16,8 @@ export default defineNuxtConfig({
     // presets
     uno: true, // enabled `@unocss/preset-uno`
     icons: true, // enabled `@unocss/preset-icons`
-    wind:true, 
-    attributify: false, // enabled `@unocss/preset-attributify`,
+    wind: true, 
+    attributify: true, // enabled `@unocss/preset-attributify`,
 
     // core options
     shortcuts: [],
