@@ -133,7 +133,7 @@
   >
     <h1 class="text-themeText">Nuxt 3 Tailwind Dark Mode Demo</h1>
 
-<Toggle v-model="darkMode" off-label="Light" on-label="Dark" />
+  <Toggle v-model="darkMode" off-label="Light" on-label="Dark" />
 </div>
 
   
@@ -142,9 +142,8 @@
 
 
 <script setup lang="ts">
-
   import Toggle from '@vueform/toggle';
-import { onMounted, watch } from '@vue/runtime-core';
+  import { onMounted, watch } from '@vue/runtime-core';
 
   let suggestions= ref([]);
   const address = "/api/notion"
@@ -196,11 +195,7 @@ type Theme = 'light' | 'dark';
       LOCAL_STORAGE_THEME_KEY
     ) as Theme;
 
-    if (themeFromLocalStorage) {
-      setTheme(themeFromLocalStorage);
-    } else {
-      setTheme(isDarkModePreferred ? 'dark' : 'light');
-    }
+    themeFromLocalStorage ? setTheme(themeFromLocalStorage) :setTheme(isDarkModePreferred ? 'dark' : 'light');
   });
 
   watch(darkMode, selected => {
