@@ -103,11 +103,49 @@
   </div>
 </div>
 
+<div class="max-w-sm rounded overflow-hidden shadow-lg dark:bg-gray-800"
+  v-for="content in suggestions" :key="content.title"
+>
+  <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains">
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2 dark:text-white">{{ content.title }}</div>
+    <p class="text-gray-700 text-base dark:text-gray-200">
+      {{ content.description }}
+    </p>
+  </div>
+  <div class="px-6 pt-4 pb-2">
+    <span
+      v-for="tag in content.tags"
+      :key="tag.id"
+      class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 dark:text-black"
+      :class="'bg-' + tag.color + '-200'" >
+    {{ tag.name }}
+    </span>
+  </div>
+</div>
+
+<div
+    :class="{
+      'theme-light': !darkMode,
+      'theme-dark': darkMode,
+    }"
+    class="h-screen bg-themeBackground p-5"
+  >
+    <h1 class="text-themeText">Nuxt 3 Tailwind Dark Mode Demo</h1>
+
+<Toggle v-model="darkMode" off-label="Light" on-label="Dark" />
+</div>
+
+  
 
 </template>
 
 
-<script setup>
+<script setup lang="ts">
+
+  import Toggle from '@vueform/toggle';
+import { onMounted, watch } from '@vue/runtime-core';
+
   let suggestions= ref([]);
   const address = "/api/notion"
   const headers = {
@@ -134,8 +172,41 @@
     .catch(err => console.error(err));
   }
 
-  onMounted(async () => await getData)
-
   const dateFormat = (date) => new Date(date).toISOString().split('T')[0].replaceAll('-', '.')
 
+  const LOCAL_STORAGE_THEME_KEY = 'theme';
+
+
+type Theme = 'light' | 'dark';
+  const darkMode = useState('theme', () => false);
+
+  const setTheme = (newTheme: Theme) => {
+    localStorage.setItem(LOCAL_STORAGE_THEME_KEY, newTheme);
+    darkMode.value = newTheme === 'dark';
+  };
+
+  onMounted(() => {
+    async () => await getData;
+
+    const isDarkModePreferred = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches;
+
+    const themeFromLocalStorage = localStorage.getItem(
+      LOCAL_STORAGE_THEME_KEY
+    ) as Theme;
+
+    if (themeFromLocalStorage) {
+      setTheme(themeFromLocalStorage);
+    } else {
+      setTheme(isDarkModePreferred ? 'dark' : 'light');
+    }
+  });
+
+  watch(darkMode, selected => {
+    setTheme(selected ? 'dark' : 'light');
+  });
+
 </script>
+
+<style src="@vueform/toggle/themes/default.css"></style>
