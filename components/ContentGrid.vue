@@ -106,7 +106,7 @@
 <div class="max-w-sm rounded overflow-hidden shadow-lg dark:bg-gray-800"
   v-for="content in suggestions" :key="content.title"
 >
-  <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains">
+  <!-- <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains"> -->
   <div class="px-6 py-4">
     <div class="font-bold text-xl mb-2 dark:text-white">{{ content.title }}</div>
     <p class="text-gray-700 text-base dark:text-gray-200">
