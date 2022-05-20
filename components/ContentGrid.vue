@@ -103,40 +103,43 @@
   </div>
 </div>
 
-<div class="max-w-sm rounded overflow-hidden shadow-lg dark:bg-gray-800"
-  v-for="content in suggestions" :key="content.title"
->
-  <!-- <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains"> -->
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2 dark:text-white">{{ content.title }}</div>
-    <p class="text-gray-700 text-base dark:text-gray-200">
-      {{ content.description }}
-    </p>
-  </div>
-  <div class="px-6 pt-4 pb-2">
-    <span
-      v-for="tag in content.tags"
-      :key="tag.id"
-      class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 dark:text-black"
-      :class="'bg-' + tag.color + '-200'" >
-    {{ tag.name }}
-    </span>
-  </div>
-</div>
 
-<div
+
+  <div
     :class="{
-      'theme-light': !darkMode,
-      'theme-dark': darkMode,
+      'light': !darkMode,
+      'dark': darkMode,
     }"
     class="h-screen bg-themeBackground p-5"
   >
+    <Toggle v-model="darkMode" off-label="🌙" on-label="💡" />
     <h1 class="text-themeText">Nuxt 3 Tailwind Dark Mode Demo</h1>
 
-  <Toggle v-model="darkMode" off-label="Light" on-label="Dark" />
-</div>
+    <div 
+      class="max-w-sm rounded overflow-hidden shadow-md my-1 dark:bg-gray-800 dark:border-light-100 dark:border"
+      v-for="content in suggestions" :key="content.title"
+    >
+      <!-- <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains"> -->
+      <div class="px-6 py-4 dark:text-white" >
+        <div class="font-bold text-xl mb-2">{{ content.title }}</div>
+        <p class="text-gray-700 text-base dark:text-gray-300">
+          {{ content.description }}
+        </p>
+      </div>
 
-  
+      <div class="px-6 pt-4 pb-2">
+        <span
+          v-for="tag in content.tags"
+          :key="tag.id"
+          class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 dark:text-black"
+          :class="'bg-' + tag.color + '-200'" >
+        {{ tag.name }}
+        </span>
+      </div>
+    </div>
+
+    
+  </div>  
 
 </template>
 
@@ -195,7 +198,7 @@ type Theme = 'light' | 'dark';
       LOCAL_STORAGE_THEME_KEY
     ) as Theme;
 
-    themeFromLocalStorage ? setTheme(themeFromLocalStorage) :setTheme(isDarkModePreferred ? 'dark' : 'light');
+    themeFromLocalStorage ? setTheme(themeFromLocalStorage) : setTheme(isDarkModePreferred ? 'dark' : 'light');
   });
 
   watch(darkMode, selected => {
