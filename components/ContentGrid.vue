@@ -2,9 +2,91 @@
 <!-- component -->
 <div class="flex flex-col">
   <div class="container mx-auto pt-8">
-    <h1 class="mb-4 text-3xl font-bold">Notion content</h1>
-    <p class="text-sm pb-4">This is a list of content ideas that are published live. If you would like to see more. VOTE!!!</p>
-    <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div
+      :class="{
+        'light': !darkMode,
+        'dark': darkMode,
+      }"
+      class="h-screen bg-themeBackground "
+    >
+    
+      <div class="flex justify-between p-6 select-none">
+        <h1 class="mb-4 text-3xl font-bold dark:text-gray-300">Notion content</h1>
+          
+        <div class="switchButton">
+  
+          <label 
+            for="toogleA"
+            class="flex items-center cursor-pointer"
+          >
+            <!-- toggle -->
+            <div class="relative">
+              <!-- input -->
+              <input id="toogleA" type="checkbox" class="sr-only" v-model="darkMode" />
+              <!-- line -->
+              <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+              <!-- dot -->
+              <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition">
+                <!-- label -->
+                <div class="ml-1 text-gray-700 font-medium dark:ml-0">
+                  {{ darkMode ? "🌙" : "💡" }}
+                </div>
+              </div>
+            </div>
+            
+          </label>
+          
+        </div>
+          
+
+
+
+      </div>
+
+      <p class="text-sm pb-4 p-6 dark:text-gray-300">This is a list of content ideas that are published live. If you would like to see more. VOTE!!!</p>
+
+
+      <div 
+        class="max-w-sm rounded overflow-hidden shadow-md m-6 my-1 dark:bg-gray-800 dark:border-light-100 dark:border"
+        v-for="content in suggestions" :key="content.title"
+      >
+
+   
+        <div class="px-6 py-4 dark:text-white" >
+          <div class="font-bold text-xl mb-2">
+            {{ content.title }}
+          </div>
+          <p class="text-gray-700 text-base dark:text-gray-300">
+            {{ content.description }}
+          </p>
+        </div>
+
+        <div class="px-6 pt-4 pb-2">
+          <span
+            v-for="tag in content.tags"
+            :key="tag.id"
+            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 dark:text-black"
+            :class="'bg-' + tag.color + '-200'" >
+          {{ tag.name }}
+          </span>
+        </div>
+
+        
+      </div>
+
+      
+    </div>  
+
+  </div>
+</div>
+
+
+
+
+
+
+
+  <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-gray">
             <table class="min-w-full divide-y divide-gray-200">
@@ -33,10 +115,6 @@
                   <th scope="col"
                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Votes
-                  </th>
-                  <th scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
                   </th>
                 </tr>
               </thead>
@@ -85,67 +163,17 @@
                     {{ content.votes }}
                     <button @click="vote(content)" class="text-indigo-400 hover:text-indigo-900">Vote</button>
                   </td>
-
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="text-gray py-1 px-2 rounded text-xs font-bold ml-1"
-                      :class="'bg-' + content.statusColor+ '-200'" >
-                    {{ content.status }}
-                    </span>
-                  </td>
-
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-  </div>
-</div>
-
-
-
-  <div
-    :class="{
-      'light': !darkMode,
-      'dark': darkMode,
-    }"
-    class="h-screen bg-themeBackground p-5"
-  >
-    <Toggle v-model="darkMode" off-label="🌙" on-label="💡" />
-    <h1 class="text-themeText">Nuxt 3 Tailwind Dark Mode Demo</h1>
-
-    <div 
-      class="max-w-sm rounded overflow-hidden shadow-md my-1 dark:bg-gray-800 dark:border-light-100 dark:border"
-      v-for="content in suggestions" :key="content.title"
-    >
-      <!-- <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains"> -->
-      <div class="px-6 py-4 dark:text-white" >
-        <div class="font-bold text-xl mb-2">{{ content.title }}</div>
-        <p class="text-gray-700 text-base dark:text-gray-300">
-          {{ content.description }}
-        </p>
-      </div>
-
-      <div class="px-6 pt-4 pb-2">
-        <span
-          v-for="tag in content.tags"
-          :key="tag.id"
-          class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 dark:text-black"
-          :class="'bg-' + tag.color + '-200'" >
-        {{ tag.name }}
-        </span>
-      </div>
-    </div>
-
-    
-  </div>  
 
 </template>
 
 
 <script setup lang="ts">
-  import Toggle from '@vueform/toggle';
   import { onMounted, watch } from '@vue/runtime-core';
 
   let suggestions= ref([]);
@@ -207,4 +235,9 @@ type Theme = 'light' | 'dark';
 
 </script>
 
-<style src="@vueform/toggle/themes/default.css"></style>
+<style>
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
+}
+</style>
